@@ -24,6 +24,10 @@
             background: #968cc6;
           }
 
+          .replicated body {
+            background: rgba(254, 0, 0, 1);
+          }
+
           .title-top img.waffle, .title-bottom img.waffle-title {
             border: 0;
             box-shadow: none;
@@ -128,7 +132,6 @@
                         <li>Configure location of services</li>
                       </ul>
                     </li>
-                    <li class="fragment">API is stateless</li>
                   </ul>
                 </section>
                 <section>
@@ -214,7 +217,7 @@
                   </ul>
                   <p class="fragment">Room for improvement...</p>
                 </section>
-                <section>
+                <section data-state="replicated">
                   <img src="images/replicated.png" />
                 </section>
                 <section>
@@ -222,9 +225,10 @@
                   <ul>
                     <li>Several features out of the box
                       <ul>
+                        <li class="fragment">Backups</li>
+                        <li class="fragment">Declarative Configuration</li>
                         <li class="fragment">Licensing</li>
                         <li class="fragment">Updates</li>
-                        <li class="fragment">Declarative Configuration</li>
                       </ul>
                     </li>
                   </ul>
@@ -264,11 +268,11 @@ volumes:
                 </section>
                 <section>
                   <h1>Replicated</h1>
-                  <img class="fragment" src="images/dashboard.png" width="1000" />
+                  <img src="images/dashboard.png" width="1000" />
                 </section>
                 <section>
                   <h1>Replicated</h1>
-                  <div class="fragment">
+                  <div>
                     <p>Retire bash scripts in favor of UI based configuration</p>
                     <img src="images/settings.png" width="800"/>
                   </div>
@@ -311,7 +315,7 @@ volumes:
                         <li class="fragment">Can provide real value to customers</li>
                       </ul>
                     </li>
-                    <li class="fragment">Docker is great for developers</li>
+                    <li class="fragment">Docker is great for developers, not just great for development</li>
                   </ul>
                 </section>
                 <section>
@@ -319,7 +323,7 @@ volumes:
                   <ul>
                     <li class="fragment">Exicted to take Docker from Takeout to our CI/CD systems as well as production
                       <ul>
-                        <li>Move from Heroku to the and the Amazon EC2 Container Service</li>
+                        <li>Move from Heroku to the Amazon EC2 Container Service</li>
                       </ul>
                     </li>
                     <li class="fragment">Continuously deploy On-Prem releases</li>
