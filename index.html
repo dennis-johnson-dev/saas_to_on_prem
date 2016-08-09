@@ -2,20 +2,205 @@
     <head>
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/white.css">
+        <style>
+          .docker .reveal img {
+            border: 0;
+            box-shadow: none;
+          }
+
+          .logo body {
+            background: #78bdf2;
+          }
+
+          .takeout body {
+            background: #968cc6;
+          }
+
+          .title-top img.waffle, .title-bottom img.waffle-title {
+            border: 0;
+            box-shadow: none;
+          }
+
+          .title-bottom img.waffle-title {
+            position: relative;
+            left: 13px;
+          }
+        </style>
     </head>
-    <body>
+    <body class="docker">
         <div class="reveal">
             <div class="slides">
                 <section>
                   <h1>Moving from SaaS <br />to On-Premises with Docker</h1>
                   <p><a href="https://twitter.com/songawee">@songawee</a></p>
                 </section>
-                <section>Waffle.io</section>
+                <section data-state="logo">
+                  <div class="title-top">
+                    <img class="waffle" src="images/waffle-yellow-on-blue.png" width="400" />
+                  </div>
+                  <div class="title-bottom">
+                    <img class="waffle-title" src="images/waffle_logo.png" width="600"/>
+                  </div>
+                </section>
+                <section>
+                  <img src="images/board_animated.gif" />
+                </section>
+                <section>
+                  <h1>Why On-Premises?</h1>
+                </section>
+                <section>
+                  <h2>Solving the right problem</h2>
+                  <div>
+                    <p class="fragment" data-fragment-index="0">Users want to use Waffle at work, but cannot access SaaS</p>
+                    <h4 class="fragment" data-fragment-index="1">Integrate with</4>
+                    <div class="img-holder">
+                      <img class="fragment" data-fragment-index="1" src="images/gh_e.jpeg" width="300"/>
+                    </div>
+                  </div>
+                </section>
+                <section data-state="takeout">
+                  <img src="images/takeout.png" width="450" />
+                  <div class="takeout-title">
+                    <img src="images/takeout_logo.png" width="700" />
+                  </div>
+                </section>
+                <section>
+                  <h1>The Challenge</h1>
+                  <ul>
+                    <li class="fragment" data-fragment-index="1">Package the app</li>
+                    <li class="fragment" data-fragment-index="2">Deliver said package</li>
+                    <li class="fragment" data-fragment-index="4">Install the app on the host machine
+                      <ul>
+                        <li class="fragment" data-fragment-index="5">Configure the app to actually work against GH:E</li>
+                      </ul>
+                    </li>
+                    <li class="fragment" data-fragment-index="6">Start everything up
+                      <ul>
+                        <li class="fragment" data-fragment-index="7">Handle HTTP traffic between services</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <p class="fragment" data-frament-index="8">Bonus: updates and licensing</p>
+                </section>
+                <section>
+                  <img src="images/wat.jpg" width="425"/>
+                </section>
+                <section>
+                  <h1>Microservice Architecture</h1>
+                  <ul class="fragment">
+                    <li>App</li>
+                    <li>Api</li>
+                    <li>Webhooks</li>
+                    <li>etc.</li>
+                  </ul>
+                </section>
+                <section>
+                  <h1>Microservice Architecture</h1>
+                  <div class="fragment">
+                    <p>+ Each service could be neatly packaged and run on its own</p>
+                    <p>- Networking was challenging</p>
+                  </div>
+                </section>
+                <section>
+                  <h1><a href="http://12factor.net/">12 factor app</a></h1>
+
+                  <ul class="fragment">
+                    <li>Can be configured by env variables
+                      <ul>
+                        <li>Configure which GitHub API to use</li>
+                        <li>Configure which database to use</li>
+                        <li>Configure location of services</li>
+                      </ul>
+                    </li>
+                    <li class="fragment">API is stateless</li>
+                  </ul>
+                </section>
+                <section>
+                  <h1>Packaging</h1>
+                  <p class="fragment" data-fragment-index="0">VMs</p>
+                  <p class="fragment" data-fragment-index="1">Docker</p>
+                </section>
+                <section>
+                  <h1>Packaging</h1>
+                  <p>Each service got a Dockerfile</p>
+                  <p>Each service got a <a href="https://quay.io">quay.io</a> repository</p>
+                  <p>Each repository had a git trigger to build new images</p>
+                  <h4 class="fragment">Development didn't really change</h4>
+                </section>
+                <section>
+                  <h1>Packaging</h1>
+                  <h3 class="fragment">Delivery</h3>
+                  <p class="fragment">Users download a package</p>
+                  <ul>
+                    <li class="fragment">S3 bucket, email, etc.</li>
+                  </ul>
+                  <p class="fragment">Follow instructions for installation and configuration</p>
+                </section>
+                <section>
+                  <h1>Packaging</h1>
+                  <div class="fragment">
+                    <p>Docker save:</p>
+                    <p>"Save one or more images to a tar archive"</p>
+                  </div>
+                  <p class="fragment">Incorporated a bash build script to generate a tarball</p>
+                </section>
+                <section>
+                  <h1>Installation</h1>
+                  <p class="fragment">Users download and extract tarball</p>
+                  <p class="fragment">Users execute 400 line bash installation script</p>
+                  <p class="fragment">Users configured the following types of information:</p>
+                  <ul class="fragment">
+                    <li>GitHub OAuth credentials</li>
+                    <li>Database connection</li>
+                    <li>Service locations</li>
+                    <li>etc...</li>
+                  </ul>
+                </section>
+                <section>
+                  <h1>Up and running!</h1>
+                  <h4 class="fragment">not so fast...</h4>
+                </section>
+                <section>
+                  <h1>Drawbacks</h1>
+                  <ul>
+                    <li>Bring Your Own Database
+                      <ul>
+                        <li>Backups were on your own</li>
+                      </ul>
+                    </li>
+                    <li>Networking was a pain
+                      <ul>
+                        <li>Had to open up sub-domains on host network</li>
+                        <li>Needed to save off locations in an environment.list file</li>
+                      </ul>
+                    </li>
+                    <li>Updates were new tarballs with update bash scripts</li>
+                    <li>Licensing would have to be built separately</li>
+                  </ul>
+                </section>
+                <section>
+                  <h1>Not all bad</h1>
+                  <ul>
+                    <li>We were On-Prem!
+                      <ul>
+                        <li>Maintainable by a small team</li>
+                        <li>App development hadn't really changed</li>
+                        <li>Some automation</li>
+                        <li>The use of Docker was validated by our users</li>
+                      </ul>
+                    </li>
+                    <li class="fragment">We started with an app that lent itself well to packaging with Docker</li>
+                  </ul>
+
+                  <p class="fragment">Room for improvement</p>
+                </section>
             </div>
         </div>
         <script src="js/reveal.min.js"></script>
         <script>
-            Reveal.initialize();
+            Reveal.initialize({
+              history: true
+            });
         </script>
     </body>
 </html>
